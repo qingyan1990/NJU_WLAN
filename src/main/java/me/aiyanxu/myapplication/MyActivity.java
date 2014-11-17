@@ -18,12 +18,13 @@ public class MyActivity extends ActionBarActivity {
         final String username = this.getString(R.string.username);
         final String password = this.getString(R.string.password);
 
-        Button button = (Button) findViewById(R.id.login_btn);
+        final Button button = (Button) findViewById(R.id.login_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("someone clicked me");
                 new WLANLogin().execute(username,password);
+                button.setText(R.string.button_response);
             }
         });
     }
