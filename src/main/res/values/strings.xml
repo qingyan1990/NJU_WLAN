@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">一键NJU</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_name">连接</string>
+    <string name="username">mg1333028</string>
+    <string name="password">liqingyan</string>
+
+</resources>
