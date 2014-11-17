@@ -1,7 +1,5 @@
 package me.aiyanxu.myapplication;
 
-
-import android.content.Context;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpResponse;

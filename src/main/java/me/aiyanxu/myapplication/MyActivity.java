@@ -1,28 +1,40 @@
 package me.aiyanxu.myapplication;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class MyActivity extends ActionBarActivity {
+    public String SETTING_PREF = "SETTING_Pref";
+    private EditText nameEdit;
+    private EditText passwordEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        final String username = this.getString(R.string.username);
-        final String password = this.getString(R.string.password);
-
         final Button button = (Button) findViewById(R.id.login_btn);
+        nameEdit = (EditText) findViewById(R.id.user_name);
+        passwordEdit = (EditText) findViewById(R.id.user_password);
+
+        SharedPreferences settings = getSharedPreferences(SETTING_PREF,0);
+        nameEdit.setText(settings.getString("username",""));
+        passwordEdit.setText(settings.getString("password",""));
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("someone clicked me");
+                String username = nameEdit.getText().toString().trim();
+                String password = passwordEdit.getText().toString().trim();
+                System.out.println("+++" + username);
+                System.out.println("---" + password);
                 new WLANLogin().execute(username,password);
                 button.setText(R.string.button_response);
             }
@@ -47,5 +59,16 @@ public class MyActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+
+        SharedPreferences settings = getSharedPreferences(SETTING_PREF,0);
+        settings.edit()
+        .putString("username",nameEdit.getText().toString().trim())
+        .putString("password",passwordEdit.getText().toString().trim())
+        .commit();
     }
 }
