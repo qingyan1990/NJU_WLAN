@@ -8,6 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class MyActivity extends ActionBarActivity {
@@ -35,8 +38,15 @@ public class MyActivity extends ActionBarActivity {
                 String password = passwordEdit.getText().toString().trim();
                 System.out.println("+++" + username);
                 System.out.println("---" + password);
-                new WLANLogin().execute(username,password);
-                button.setText(R.string.button_response);
+                try {
+                    MessageBox(new WLANLogin().execute(username,password).get());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+//                button.setText(R.string.button_response);
+//                MessageBox("hello");
             }
         });
     }
@@ -70,5 +80,9 @@ public class MyActivity extends ActionBarActivity {
         .putString("username",nameEdit.getText().toString().trim())
         .putString("password",passwordEdit.getText().toString().trim())
         .commit();
+    }
+
+    public void MessageBox(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

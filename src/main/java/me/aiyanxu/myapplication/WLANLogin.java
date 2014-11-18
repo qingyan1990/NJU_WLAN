@@ -18,11 +18,10 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WLANLogin extends AsyncTask<String, Void, Void> {
+public class WLANLogin extends AsyncTask<String, Void, String> {
     @Override
-    protected Void doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         byte[] result;
-        String str;
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost("http://p.nju.edu.cn/portal/portal_io.do");
@@ -41,15 +40,15 @@ public class WLANLogin extends AsyncTask<String, Void, Void> {
             StatusLine statusLine = response.getStatusLine();
             if (statusLine.getStatusCode() == HttpURLConnection.HTTP_OK) {
                 result = EntityUtils.toByteArray(response.getEntity());
-                str = new String(result, "UTF-8");
-                System.out.println(str);
+                String str = new String(result, "UTF-8");
+                return str;
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return "error";
     }
 }
 
